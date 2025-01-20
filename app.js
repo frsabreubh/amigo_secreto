@@ -7,16 +7,16 @@ function adicionarAmigo() {
   let nomeDoAmigo = idCampoNomeDoAmigo.value;
 
   if (nomeDoAmigo == '') {
-    alert('Por favor, insira um nome válido');    
+    alert('Por favor, insira um nome válido');
   } else {
     if (nomeInclusoNaLista(nomeDoAmigo)) {
-      alert('O nome informado já existe na lista');      
+      alert('O nome informado já existe na lista');
     } else {
       listaDeAmigos.push(nomeDoAmigo);
-      //console.log(listaDeAmigos)
+      //console.log(listaDeAmigos);
     }
   }
-  
+
   atualizarListaDeAmigos();
   limpaCampo(idCampoNomeDoAmigo);
 }
@@ -32,7 +32,7 @@ function limpaCampo(idCampo) {
 function atualizarListaDeAmigos() {
   let listaHTML = idListaAmigos;
   listaHTML.innerHTML = '';
-  
+
   listaDeAmigos.forEach(amigo => {
     let item = document.createElement('li');
     item.textContent = amigo;
@@ -41,23 +41,19 @@ function atualizarListaDeAmigos() {
 }
 
 function sortearAmigo() {
-  if (listaDeAmigos.length === 0) {
-    alert('Você precisa adicionar amigos antes de fazer o sorteio!');
-  } else {    
+  if (listaDeAmigos.length > 0) {    
     let indexSorteado = Math.floor(Math.random() * listaDeAmigos.length);
-    let nomeSorteado = listaDeAmigos.splice(indexSorteado, 1)[0];
-    
+    let nomeSorteado = listaDeAmigos.splice(indexSorteado, 1)[0];    
     let li = document.createElement('li');
-    
-    idResultado.innerHTML = '';
     li.innerHTML = `O amigo secreto sorteado é: ${nomeSorteado}`;
-
+    idResultado.innerHTML = '';
     idResultado.appendChild(li);
-    
-    if (listaDeAmigos.length === 0) {      
-      setTimeout(() => {
-        alert('Todos os amigos foram sorteados!');
-      }, 100);
-    }
+   
+    atualizarListaDeAmigos();
+  } else {    
+    idResultado.innerHTML = '';
+    let li = document.createElement('li');
+    li.innerHTML = 'Todos os amigos já foram sorteados!';
+    idResultado.appendChild(li);
   }
 }
